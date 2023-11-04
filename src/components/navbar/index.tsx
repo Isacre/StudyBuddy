@@ -1,42 +1,28 @@
-"use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
-import styled from "styled-components";
 import logo from "../../../public/logo.svg";
-import SearchBar from "../searchbar";
-import Profile from "../profile";
+import SearchBar from "@/components/searchbar";
+import Profile from "@/components/profile";
+import { Content, Logo, Wrapper } from "./styles";
+import { ContextMenuOption, UserAccount } from "@/types";
+import { BiUser } from "react-icons/bi";
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { AiOutlineLogout } from "react-icons/ai";
+import { useAppSelector } from "@/redux/hooks";
 
-const Wrapper = styled.div`
-  background-color: #404156;
-  width: 100%;
-  display: flex;
-  padding: 10px 20px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Content = styled.div`
-  width: 90%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
-  h2 {
-    color: white;
-  }
-`;
-
-export default function Navbar() {
+interface Props {
+  options?: ContextMenuOption[];
+}
+export default function Navbar(props: Props) {
+  const User = useAppSelector((state) => state.user);
   const [Value, setValue] = useState("");
+  const Options: ContextMenuOption[] = [
+    { text: "Ver Perfil", onClick: () => console.log("Vendo perfil"), icon: BiUser },
+    { text: "Criar Grupo", onClick: () => console.log("Criando grupo"), icon: HiOutlineUserGroup },
+    { text: "Sair", onClick: () => console.log("Deslogou"), icon: AiOutlineLogout, color: "red" },
+  ];
+
+  const { options = Options } = props;
   return (
     <Wrapper>
       <Content>
@@ -45,7 +31,7 @@ export default function Navbar() {
           <h2>StudyBuddy</h2>
         </Logo>
         <SearchBar value={Value} setValue={setValue} iconSide="left" />
-        <Profile />
+        <Profile contextOptions={options} user={User} />
       </Content>
     </Wrapper>
   );

@@ -1,86 +1,39 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import FeedLayout from "../layouts/layout";
-import styled from "styled-components";
 import Link from "next/link";
-const Wrapper = styled.div`
-  display: flex;
-  padding: 25px 0px;
-  align-items: baseline;
-  justify-content: center;
-  width: 100%;
-`;
+import { Form, FormBody, Message, SignUpRedirect, SubmitButton, Title, Wrapper } from "./styles";
+import { getUserData, login } from "@/services/index";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { handleErrors } from "@/utils";
+import { useDispatch } from "react-redux";
+import { saveUserData } from "@/redux/reducers/user";
+import { useAppSelector } from "@/redux/hooks";
 
-const Form = styled.div`
-  margin-top: 100px;
-  width: 500px;
-  height: 400px;
-  background-color: #404156;
-  border-radius: 5px;
-`;
-
-const Title = styled.div`
-  border-radius: 5px 5px 0px 0px;
-  background-color: #6a6c98;
-  padding: 20px;
-  text-align: center;
-  color: white;
-  font-weight: bolder;
-`;
-
-const FormBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 15px;
-
-  label {
-    margin-bottom: 10px;
-  }
-  input {
-    padding: 10px 10px;
-    outline: none;
-    border: none;
-    background-color: #eaf0ff;
-    border-radius: 2px;
-    margin-bottom: 10px;
-  }
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #6dbcd5;
-  border: none;
-  border-radius: 2px;
-  color: white;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  font-weight: bold;
-`;
-
-const Message = styled.b`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-  color: #00c3ff;
-`;
-
-const SignUpRedirect = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
-  b {
-    cursor: pointer;
-    color: #00c3ff;
-  }
-`;
 export default function Login() {
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const userData = useAppSelector((state) => state.user.data);
+
+  function submit() {
+    login(Email, Password)
+      .then((res) => {
+        localStorage.setItem("accesstoken", res.access);
+        localStorage.setItem("refreshtoken", res.refresh);
+      })
+      .catch((err) => {
+        handleErrors(err);
+      })
+      .then(() => {
+        getUserData().then((res) => {
+          dispatch(saveUserData(res));
+        });
+        console.log("1", userData);
+      });
+  }
+
   return (
     <FeedLayout>
       <Wrapper>
@@ -89,10 +42,10 @@ export default function Login() {
           <Message>Find your study partner</Message>
           <FormBody>
             <label htmlFor="">Email</label>
-            <input type="text" />
+            <input value={Email} onChange={(e) => setEmail(e.target.value)} type="text" />
             <label htmlFor="">Password</label>
-            <input type="password" />
-            <SubmitButton>Submit</SubmitButton>
+            <input value={Password} onChange={(e) => setPassword(e.target.value)} type="password" />
+            <SubmitButton onClick={submit}>Submit</SubmitButton>
             <SignUpRedirect>
               <small>Haven't signed up yet?</small>
               <Link href="/signup">

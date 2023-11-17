@@ -4,7 +4,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import styled from "styled-components";
 import { store } from "../../redux";
-import { useAppSelector } from "@/redux/hooks";
+import { ToastContainer } from "react-toastify";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,6 +24,7 @@ export default function FeedLayout({ children }: { children: React.ReactNode }) 
   return (
     <Wrapper>
       <Provider store={store}>
+        <ToastContainer />
         <Navbar />
         <RenderedRoute>{children}</RenderedRoute>
       </Provider>

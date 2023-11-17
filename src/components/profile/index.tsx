@@ -28,10 +28,7 @@ export default function Profile(props: Props) {
       ) : (
         <ProfileWrapper>
           <UserPicture>
-            <img
-              src="https://s.yimg.com/ny/api/res/1.2/mGT.B13FkIK7xA6u0pd8iQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTYzMDtoPTg5OQ--/https://media.zenfs.com/en-AU/homerun/y7.beau/8550c6d541c4fabcf806abe4dbde2533"
-              alt=""
-            />
+            <img src={user.picture} alt="" />
           </UserPicture>
           <UserName>
             <p>dennis</p>

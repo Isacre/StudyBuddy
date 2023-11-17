@@ -11,9 +11,15 @@ export default function ContextMenu(props: Props) {
   const { isOpen, options, setOpen } = props;
 
   return (
-    <Wrapper isopen={isOpen}>
+    <Wrapper isopen={String(isOpen)}>
       {options.map((option) => (
-        <Option key={option.text} onClick={() => option.onClick()}>
+        <Option
+          key={option.text}
+          onClick={() => {
+            option.onClick();
+            setOpen(false);
+          }}
+        >
           <option.icon color={option?.color} />
           <p>{option.text}</p>
         </Option>

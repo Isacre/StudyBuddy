@@ -9,18 +9,27 @@ import { BiUser } from "react-icons/bi";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useAppSelector } from "@/redux/hooks";
+import { logoutUser } from "@/redux/reducers/user";
+import { useDispatch } from "react-redux";
 
 interface Props {
   options?: ContextMenuOption[];
 }
 export default function Navbar(props: Props) {
-  const User = useAppSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const User = useAppSelector((state) => state.user.data);
   const [Value, setValue] = useState("");
   const Options: ContextMenuOption[] = [
     { text: "Ver Perfil", onClick: () => console.log("Vendo perfil"), icon: BiUser },
     { text: "Criar Grupo", onClick: () => console.log("Criando grupo"), icon: HiOutlineUserGroup },
-    { text: "Sair", onClick: () => console.log("Deslogou"), icon: AiOutlineLogout, color: "red" },
+    { text: "Sair", onClick: LogOut, icon: AiOutlineLogout, color: "red" },
   ];
+
+  function LogOut() {
+    sessionStorage.removeItem("accesstoken");
+    sessionStorage.removeItem("refreshtoken");
+    dispatch(logoutUser());
+  }
 
   const { options = Options } = props;
   return (

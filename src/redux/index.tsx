@@ -1,10 +1,12 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
 import UserReducer from "./reducers/user";
+import RoomsReducer from "./reducers/rooms";
 
 export const store = configureStore({
   reducer: {
     user: UserReducer,
+    rooms: RoomsReducer,
   },
 });
 

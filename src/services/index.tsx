@@ -1,13 +1,12 @@
-import { AuthToken, UserAccount } from "@/types";
+import { AuthToken, PaginationResponse, Room, UserAccount } from "@/types";
+import { addParamIfNotEmpty } from "@/utils";
 import axios from "axios";
 
 const url = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
-const accesstoken = localStorage.getItem("accesstoken");
 const config = {
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization: `JWT ${accesstoken}`,
   },
 };
 
@@ -37,4 +36,11 @@ export async function login(email: string, password: string): Promise<AuthToken>
 export async function getUserData(): Promise<UserAccount> {
   const user = await axios.get(`${url}/auth/users/me/`, config);
   return user.data;
+}
+
+export async function getRooms(search: string): Promise<PaginationResponse<Room>> {
+  const params = {};
+  addParamIfNotEmpty(params, "search", search);
+  const room = await axios.get(`${url}/rooms/`, { params, headers: config.headers });
+  return room.data;
 }

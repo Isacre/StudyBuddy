@@ -4,19 +4,19 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 75px;
 `;
 export const ProfileWrapper = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
   justify-content: space-between;
+  height: 100%;
 `;
-export const UserPicture = styled.div`
+export const UserPicture = styled.div<{ size: number }>`
   border-radius: 100px;
-  width: 50px;
-  height: 50px;
-  background-color: #87b0c7;
+  width: ${(props) => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
+  background-color: #6596aa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +36,7 @@ export const UserName = styled.p`
   }
 
   b {
-    color: #87b0c7;
+    color: #57bbdd;
     font-weight: 400;
   }
 `;

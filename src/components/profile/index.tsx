@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import ContextMenu from "@/components/contextMenu";
@@ -7,10 +8,12 @@ import Link from "next/link";
 
 interface Props {
   user: UserAccount;
-  contextOptions: ContextMenuOption[];
+  contextMenuOptions?: ContextMenuOption[];
+  showUsername?: boolean;
+  pictureSize?: number;
 }
 export default function Profile(props: Props) {
-  const { contextOptions, user } = props;
+  const { contextMenuOptions = [], user, showUsername = true, pictureSize = 50 } = props;
   const [ContextModalOpen, setContextModalOpen] = useState(false);
 
   return (
@@ -27,17 +30,17 @@ export default function Profile(props: Props) {
         </Register>
       ) : (
         <ProfileWrapper>
-          <UserPicture>
-            <img src={user.picture} alt="" />
+          <UserPicture size={pictureSize}>
+            <img src={user.picture} alt={`${user.username}`} />
           </UserPicture>
           <UserName>
-            <p>dennis</p>
-            <b>@dennis</b>
+            {showUsername && <p>{user.username}</p>}
+            <b>{`@${user.username}`}</b>
           </UserName>
-          {contextOptions.length > 0 && <BsChevronDown size={25} cursor={"pointer"} onMouseEnter={() => setContextModalOpen(true)} />}
+          {contextMenuOptions.length > 0 && <BsChevronDown size={25} cursor={"pointer"} onMouseEnter={() => setContextModalOpen(true)} />}
         </ProfileWrapper>
       )}
-      <ContextMenu isOpen={ContextModalOpen} setOpen={setContextModalOpen} options={contextOptions} />
+      <ContextMenu isOpen={ContextModalOpen} setOpen={setContextModalOpen} options={contextMenuOptions} />
     </Wrapper>
   );
 }

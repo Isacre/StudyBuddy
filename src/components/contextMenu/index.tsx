@@ -1,3 +1,4 @@
+"use client";
 import { ContextMenuOption } from "@/types";
 import React from "react";
 import { Option, Wrapper } from "./styles";
@@ -11,8 +12,8 @@ export default function ContextMenu(props: Props) {
   const { isOpen, options, setOpen } = props;
 
   return (
-    <Wrapper isopen={String(isOpen)}>
-      {options.map((option) => (
+    <Wrapper $isopen={String(isOpen)}>
+      {options?.map((option) => (
         <Option
           key={option.text}
           onClick={() => {

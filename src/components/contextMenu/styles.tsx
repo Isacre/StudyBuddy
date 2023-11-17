@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div<{ isopen: string }>`
+export const Wrapper = styled.div<{ $isopen: string }>`
   position: absolute;
-  top: 70px;
+  top: 50px;
   background-color: #52536f;
   width: 200px;
   border-radius: 2px;
-  max-height: ${(props) => (props.isopen === "true" ? "500px" : "0px")};
+  max-height: ${(props) => (props.$isopen === "true" ? "500px" : "0px")};
   transition: all 200ms ease-in-out;
   overflow: hidden;
 `;

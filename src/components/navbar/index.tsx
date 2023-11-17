@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../public/logo.svg";
 import SearchBar from "@/components/searchbar";
 import Profile from "@/components/profile";
@@ -11,11 +12,13 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { useAppSelector } from "@/redux/hooks";
 import { logoutUser } from "@/redux/reducers/user";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 interface Props {
   options?: ContextMenuOption[];
 }
 export default function Navbar(props: Props) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const User = useAppSelector((state) => state.user.data);
   const [Value, setValue] = useState("");
@@ -35,12 +38,12 @@ export default function Navbar(props: Props) {
   return (
     <Wrapper>
       <Content>
-        <Logo>
+        <Logo style={{ cursor: "pointer" }} onClick={() => router.replace("/feed")}>
           <Image src={logo} alt="study-buddy" height={40} />
           <h2>StudyBuddy</h2>
         </Logo>
         <SearchBar value={Value} setValue={setValue} iconSide="left" />
-        <Profile contextOptions={options} user={User} />
+        <Profile contextMenuOptions={options} user={User} />
       </Content>
     </Wrapper>
   );

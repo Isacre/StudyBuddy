@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 export const Form = styled.div`
   margin-top: 100px;
   width: 500px;
-  height: 400px;
+  height: 450px;
   background-color: #404156;
   border-radius: 5px;
 `;

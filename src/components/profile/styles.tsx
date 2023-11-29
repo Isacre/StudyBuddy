@@ -29,7 +29,7 @@ export const UserPicture = styled.div<{ size: number }>`
     object-fit: cover;
   }
 `;
-export const UserName = styled.p`
+export const UserName = styled.div`
   p {
     font-weight: bold;
     color: #a1a6b9;

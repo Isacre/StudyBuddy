@@ -6,8 +6,10 @@ import { getUserData, login } from "@/services/index";
 import { handleErrors } from "@/utils";
 import { useDispatch } from "react-redux";
 import { saveUserData } from "@/redux/reducers/user";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ export default function Login() {
         getUserData().then((res) => {
           dispatch(saveUserData(res));
         });
+        router.replace("/feed");
       })
       .catch((err) => {
         handleErrors(err);

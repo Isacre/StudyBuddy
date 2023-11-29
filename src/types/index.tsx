@@ -14,14 +14,16 @@ export declare type AuthToken = {
 
 export declare type ContextMenuOption = { text: string; icon: IconType; onClick: Function; color?: string };
 
+export declare type Topic = {
+  id: number;
+  room_count: number;
+  name: string;
+};
+
 export declare type Room = {
   id: number;
-  host: {
-    id: number;
-    username: string;
-    picture: string;
-  };
-  topic: { id: number; name: string };
+  host: UserAccount;
+  topic: Topic;
   name: string;
   description: string;
   created_at: string;
